@@ -50,6 +50,14 @@
 </head>
 
 <body>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({
+      token: "59f121312b64d447a5702dc4c5e8e61c",
+      application: "Lab9"
+    });
+  </script>
+
   <main>
     <form>
       <fieldset>
@@ -95,13 +103,63 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      try {
+        let result = eval(`${firstNum} ${operator} ${secondNum}`);
+        output.innerText = result;
+      } catch (error) {
+        console.error("Calculation error:", error);
+        output.innerText = "Error in calculation";
+      } finally {
+        console.log("Calculation attempted");
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    console.count("Page loaded");
+
+    errorBtns[0].addEventListener('click', () => console.log("Console Log Demo"));
+    errorBtns[1].addEventListener('click', () => console.error("Console Error Demo"));
+    errorBtns[2].addEventListener('click', () => console.count("Console Count"));
+    errorBtns[3].addEventListener('click', () => console.warn("Console Warning!"));
+    errorBtns[4].addEventListener('click', () => console.assert(false, "Assertion failed!"));
+    errorBtns[5].addEventListener('click', () => console.clear());
+    errorBtns[6].addEventListener('click', () => console.dir(document.body));
+    errorBtns[7].addEventListener('click', () => console.dirxml(document));
+    errorBtns[8].addEventListener('click', () => {
+      console.group("Grouped Messages");
+      console.log("Inside group: msg 1");
+      console.log("Inside group: msg 2");
+    });
+    errorBtns[9].addEventListener('click', () => console.groupEnd());
+    errorBtns[10].addEventListener('click', () => {
+      const tableData = [
+        { name: "Alice", age: 20 },
+        { name: "Bob", age: 22 }
+      ];
+      console.table(tableData);
+    });
+    errorBtns[11].addEventListener('click', () => console.time("Timer"));
+    errorBtns[12].addEventListener('click', () => console.timeEnd("Timer"));
+    errorBtns[13].addEventListener('click', () => {
+      function a() { b(); }
+      function b() { c(); }
+      function c() { console.trace("Trace started"); }
+      a();
+    });
+    errorBtns[14].addEventListener('click', () => {
+      nonExistentFunction(); 
+    });
+
+    window.onerror = function (message, source, lineno, colno, error) {
+      console.log("Global error caught:");
+      console.log({ message, source, lineno, colno, error });
+    };
+
+    if (window.TrackJS) {
+      TrackJS.track("Testing TrackJS is working!");
+    }
   </script>
 </body>
 
