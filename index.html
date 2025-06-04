@@ -149,7 +149,7 @@
       a();
     });
     errorBtns[14].addEventListener('click', () => {
-      nonExistentFunction(); 
+      throw new Error("This is a global error for testing purposes!"); 
     });
 
     window.onerror = function (message, source, lineno, colno, error) {
